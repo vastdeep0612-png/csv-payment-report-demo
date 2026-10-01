@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DEMO PROJECT — CSV payment report</title>
+  <style>
+    body { margin: 0; background: #f6f4ef; color: #1d1a16; font: 1.05rem/1.5 "Segoe UI", sans-serif; }
+    main { width: min(42rem, calc(100% - 2rem)); margin: 2rem auto; }
+    table { border-collapse: collapse; width: 100%; background: #fff; }
+    th, td { border: 1px solid #d7d0c4; padding: 0.4rem 0.55rem; text-align: left; }
+    h1, h2 { font-family: Georgia, serif; font-weight: 500; }
+    .label { color: #5e574e; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="label">DEMO PROJECT. Self-initiated sample. Not a client file.</p>
+    <h1>CSV payment report</h1>
+    <p>The script reads <code>sample.csv</code>, keeps valid paid rows, and writes a total. Refunded rows, invalid amounts, and a repeated order id stay out of the total.</p>
+    <h2>Accepted output</h2>
+    <table>
+      <tr><th>order_id</th><th>amount</th></tr>
+      <tr><td>A-100</td><td>12.50</td></tr>
+      <tr><td>A-101</td><td>7.00</td></tr>
+      <tr><td>A-104</td><td>3.25</td></tr>
+      <tr><td>TOTAL</td><td>22.75</td></tr>
+    </table>
+    <h2>Left out</h2>
+    <table>
+      <tr><th>order_id</th><th>reason</th></tr>
+      <tr><td>A-102</td><td>refunded</td></tr>
+      <tr><td>A-103</td><td>not a number</td></tr>
+      <tr><td>A-100</td><td>duplicate order id</td></tr>
+      <tr><td>A-105</td><td>empty amount</td></tr>
+      <tr><td>A-106</td><td>currency symbol</td></tr>
+    </table>
+    <p>Run <code>python process.py</code> in the repository to regenerate the CSV output. The tests expect the total 22.75.</p>
+  </main>
+</body>
+</html>

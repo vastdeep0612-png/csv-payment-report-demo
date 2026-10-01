@@ -1,0 +1,9 @@
+order_id,status,amount
+A-100,paid,12.50
+A-101,paid,7.00
+A-102,refunded,4.00
+A-103,paid,not-a-number
+A-104,paid,3.25
+A-100,paid,12.50
+A-105,paid,
+A-106,paid,$9.00

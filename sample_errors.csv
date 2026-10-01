@@ -1,0 +1,5 @@
+order_id,status,amount,reason
+A-103,paid,not-a-number,not_a_number
+A-100,paid,12.50,duplicate_order_id
+A-105,paid,,empty_amount
+A-106,paid,$9.00,currency_symbol
