@@ -30,6 +30,8 @@ class ReportTests(unittest.TestCase):
         self.assertEqual(reasons["A-100"], "duplicate_order_id")
         self.assertEqual(reasons["A-105"], "empty_amount")
         self.assertEqual(reasons["A-106"], "currency_symbol")
+        self.assertEqual(reasons["A-107"], "date_invalid")
+        self.assertEqual(reasons["A-108"], "empty_date")
 
     def test_written_output_matches(self):
         process.write_outputs(self.result, ROOT)

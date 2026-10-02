@@ -4,17 +4,17 @@ Self-initiated sample. This is not a client file.
 
 ## What problem it solves
 
-A repeated order export needs a paid total. Refunded rows, amounts that are not numbers, empty amounts, currency symbols, and a repeated order id should not be added twice.
+A repeated order export needs a paid total. Refunded rows, amounts that are not numbers, empty amounts, currency symbols, invalid dates, empty dates, and a repeated order id should not be added twice.
 
 ## Input format
 
 CSV with a header:
 
 ```
-order_id,status,amount
+order_id,status,amount,paid_on
 ```
 
-`status` is `paid` or another word such as `refunded`. `amount` is a plain decimal. `$`, `€`, and `£` are rejected.
+`status` is `paid` or another word such as `refunded`. `amount` is a plain decimal. `$`, `€`, and `£` are rejected. `paid_on` must be a real `YYYY-MM-DD` date. The same columns can be exported from a spreadsheet and saved as CSV. This script does not open `.xlsx` files.
 
 ## Output format
 
@@ -43,7 +43,7 @@ Accepted payments are A-100 12.50, A-101 7.00, and A-104 3.25.
 valid_payments_total: 22.75
 ```
 
-A-102 is refunded. A-103 is not a number. The second A-100 is a duplicate. A-105 is empty. A-106 uses a currency symbol.
+A-102 is refunded. A-103 is not a number. The second A-100 is a duplicate. A-105 is empty. A-106 uses a currency symbol. A-107 has an impossible date and a 5.00 amount that is excluded. A-108 has an empty date and a 1.00 amount that is excluded. The sample does not claim a business result.
 
 ## Limitations
 

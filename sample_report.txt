@@ -2,4 +2,4 @@ DEMO PROJECT. Self-initiated sample. Not a client file.
 valid_paid_rows: 3
 valid_payments_total: 22.75
 excluded_not_paid: 1
-invalid_or_duplicate_rows: 4
+invalid_or_duplicate_rows: 6

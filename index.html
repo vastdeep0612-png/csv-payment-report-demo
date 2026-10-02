@@ -17,7 +17,7 @@
   <main>
     <p class="label">DEMO PROJECT. Self-initiated sample. Not a client file.</p>
     <h1>CSV payment report</h1>
-    <p>The script reads <code>sample.csv</code>, keeps valid paid rows, and writes a total. Refunded rows, invalid amounts, and a repeated order id stay out of the total.</p>
+    <p>The script reads synthetic <code>sample.csv</code> rows. It checks the amount and an ISO date, keeps the first valid paid row for each order id, and writes a total. Refunded rows, invalid amounts, bad dates, and a repeated order id stay out of the total.</p>
     <h2>Accepted output</h2>
     <table>
       <tr><th>order_id</th><th>amount</th></tr>
@@ -34,6 +34,8 @@
       <tr><td>A-100</td><td>duplicate order id</td></tr>
       <tr><td>A-105</td><td>empty amount</td></tr>
       <tr><td>A-106</td><td>currency symbol</td></tr>
+      <tr><td>A-107</td><td>invalid date</td></tr>
+      <tr><td>A-108</td><td>empty date</td></tr>
     </table>
     <p>Run <code>python process.py</code> in the repository to regenerate the CSV output. The tests expect the total 22.75.</p>
   </main>

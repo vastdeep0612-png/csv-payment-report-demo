@@ -6,6 +6,7 @@ excluded. A repeated order id is kept once.
 """
 
 import csv
+from datetime import date
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
@@ -23,6 +24,23 @@ def parse_amount(raw):
     return amount.quantize(Decimal("0.01"))
 
 
+def parse_date(raw):
+    text = (raw or "").strip()
+    if text == "":
+        raise ValueError("empty_date")
+    parts = text.split("-")
+    if len(parts) != 3:
+        raise ValueError("date_invalid")
+    try:
+        year, month, day = (int(part) for part in parts)
+        parsed = date(year, month, day)
+    except ValueError as exc:
+        raise ValueError("date_invalid") from exc
+    if len(parts[0]) != 4:
+        raise ValueError("date_invalid")
+    return parsed.isoformat()
+
+
 def build_report(rows):
     paid = []
     errors = []
@@ -32,7 +50,13 @@ def build_report(rows):
         order_id = (row.get("order_id") or "").strip()
         status = (row.get("status") or "").strip().lower()
         amount_raw = row.get("amount") or ""
-        record = {"order_id": order_id, "status": status, "amount": amount_raw.strip()}
+        paid_on = (row.get("paid_on") or "").strip()
+        record = {
+            "order_id": order_id,
+            "status": status,
+            "amount": amount_raw.strip(),
+            "paid_on": paid_on,
+        }
         if status != "paid":
             skipped.append({**record, "reason": "status_not_paid"})
             continue
@@ -44,8 +68,13 @@ def build_report(rows):
         except ValueError as exc:
             errors.append({**record, "reason": str(exc)})
             continue
+        try:
+            paid_on = parse_date(paid_on)
+        except ValueError as exc:
+            errors.append({**record, "reason": str(exc)})
+            continue
         seen.add(order_id)
-        paid.append({"order_id": order_id, "amount": f"{amount:.2f}"})
+        paid.append({"order_id": order_id, "amount": f"{amount:.2f}", "paid_on": paid_on})
     total = sum((Decimal(item["amount"]) for item in paid), Decimal("0.00"))
     return {
         "paid": paid,
@@ -67,12 +96,14 @@ def write_outputs(result, output_dir):
     error_path = folder / "sample_errors.csv"
     report_path = folder / "sample_report.txt"
     with paid_path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=["order_id", "amount"])
+        writer = csv.DictWriter(handle, fieldnames=["order_id", "amount", "paid_on"])
         writer.writeheader()
         writer.writerows(result["paid"])
         writer.writerow({"order_id": "TOTAL", "amount": result["total"]})
     with error_path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=["order_id", "status", "amount", "reason"])
+        writer = csv.DictWriter(
+            handle, fieldnames=["order_id", "status", "amount", "paid_on", "reason"]
+        )
         writer.writeheader()
         writer.writerows(result["errors"])
     lines = [

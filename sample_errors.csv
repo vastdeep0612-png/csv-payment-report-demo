@@ -1,5 +1,7 @@
-order_id,status,amount,reason
-A-103,paid,not-a-number,not_a_number
-A-100,paid,12.50,duplicate_order_id
-A-105,paid,,empty_amount
-A-106,paid,$9.00,currency_symbol
+order_id,status,amount,paid_on,reason
+A-103,paid,not-a-number,2026-02-04,not_a_number
+A-100,paid,12.50,2026-01-15,duplicate_order_id
+A-105,paid,,2026-03-02,empty_amount
+A-106,paid,$9.00,2026-03-03,currency_symbol
+A-107,paid,5.00,2026-13-40,date_invalid
+A-108,paid,1.00,,empty_date
