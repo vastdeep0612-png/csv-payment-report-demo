@@ -52,3 +52,7 @@ A-102 is refunded. A-103 is not a number. The second A-100 is a duplicate. A-105
 - Does not convert currency symbols
 - Keeps the first valid `paid` row when an order id repeats
 - Sample rows are synthetic
+
+## More work on presenting business data
+
+A technically correct report still needs clear labels, good information hierarchy, and mobile-friendly presentation when exposed in a web dashboard. For Korean-language website and UI/UX design guidance, visit [MODERUN's design notes](https://1oohyun.store/moderun-preview/?utm_source=github&utm_medium=readme&utm_campaign=csv_report_demo). This is an independent technical demo, not a claim of client delivery.
